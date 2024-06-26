@@ -5,15 +5,15 @@ public class Main {
         Scanner scnr = new Scanner(System.in);
         Deck deck = new Deck();
 
-        boolean play = true;
-        while (play) {
-            System.out.print("Hit?\n");
+        boolean playing = true;
+        while (playing) {
+            System.out.print("Play?\n");
             String answer = scnr.next();
             if(answer.equals("y")) {
-                Card card = deck.drawCard();
-                System.out.print(card.getStringOfValue() + card.getStringOfSuit() + "\n");
+                Play game = new Play();
+                game.start(1);
             } else {
-                play = false;
+                playing = false;
             }
         }
     }

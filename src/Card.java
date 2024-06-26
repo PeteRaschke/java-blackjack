@@ -17,7 +17,7 @@ public class Card {
 
     public String getStringOfValue() {
         return switch (this.valueOfCard) {
-            case 1 -> "1";
+            case 1 -> "A";
             case 2 -> "2";
             case 3 -> "3";
             case 4 -> "4";
@@ -26,7 +26,7 @@ public class Card {
             case 7 -> "7";
             case 8 -> "8";
             case 9 -> "9";
-            case 10 -> "10";
+            case 10 -> "T";
             case 11 -> "J";
             case 12 -> "Q";
             case 13 -> "K";
