@@ -16,7 +16,7 @@ public class Play {
         this.scnr = new Scanner(System.in);
     }
 
-    public void start(int players) {
+    public void start() {
         boolean playing = true;
 
         playerHand.add(deck.drawCard());
@@ -31,6 +31,9 @@ public class Play {
         while (playing) {
             buildCard(dHandSize, dealerHand);
             buildCard(pHandSize, playerHand);
+            dHandValue = handValue(dealerHand);
+            pHandValue = handValue(playerHand);
+            System.out.print("Current hand value: " + pHandValue + "\n");
             System.out.print("Hit(h), Stay(s)?");
             String answer = scnr.next();
             if (answer.equals("h")) {
@@ -38,12 +41,54 @@ public class Play {
                 pHandSize += 1;
             }
             else if (answer.equals("s")) {
-                continue;
+                dealersTurn();
             }
             else if (answer.equals("q")) {
                 playing = false;
             }
         }
+    }
+
+    public void dealersTurn() {
+        boolean drawing = true;
+        dealerHand.get(1).setHidden(false);
+        while (drawing) {
+            if (dHandValue > 16) {
+                drawing = false;
+            }
+            else {
+                dealerHand.add(deck.drawCard());
+                dHandSize += 1;
+                dHandValue = handValue(dealerHand);
+            }
+        }
+    }
+
+    public int handValue(ArrayList<Card> hand) {
+        int handVal = 0;
+        int numAces = 0;
+
+        for (Card card : hand) {
+            if (card.getValue() == 1) {
+                numAces += 1;
+            }
+            else if (card.getValue() < 10) {
+                handVal += card.getValue();
+            }
+            else{
+                handVal += 10;
+            }
+        }
+        for (int i = 0; i < numAces; i++) {
+            if(handVal < 11) {
+                handVal += 11;
+            }
+            else {
+                handVal += 1;
+            }
+        }
+
+        return handVal;
     }
 
     public void buildCard(int numCards, ArrayList<Card> hand) {
@@ -97,4 +142,3 @@ public class Play {
         System.out.print("\n");
     }
 }
-
