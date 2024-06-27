@@ -18,6 +18,7 @@ public class Play {
 
     public void start() {
         boolean playing = true;
+        resetHands();
 
         playerHand.add(deck.drawCard());
         playerHand.add(deck.drawCard());
@@ -29,10 +30,21 @@ public class Play {
         dHandSize += 2;
 
         while (playing) {
-            buildCard(dHandSize, dealerHand);
-            buildCard(pHandSize, playerHand);
-            dHandValue = handValue(dealerHand);
-            pHandValue = handValue(playerHand);
+            Helper.buildCard(dHandSize, dealerHand);
+            Helper.buildCard(pHandSize, playerHand);
+            dHandValue = Helper.handValue(dealerHand);
+            pHandValue = Helper.handValue(playerHand);
+            if (pHandValue > 21) {
+                System.out.print("Player bust!\n");
+                System.out.print("Continue with this shoe? (y/n):\n");
+                String answer = scnr.next();
+                if (answer.equals("y")) {
+                    start();
+                }
+                else {
+                    break;
+                }
+            }
             System.out.print("Current hand value: " + pHandValue + "\n");
             System.out.print("Hit(h), Stay(s)?");
             String answer = scnr.next();
@@ -59,86 +71,17 @@ public class Play {
             else {
                 dealerHand.add(deck.drawCard());
                 dHandSize += 1;
-                dHandValue = handValue(dealerHand);
+                dHandValue = Helper.handValue(dealerHand);
             }
         }
     }
 
-    public int handValue(ArrayList<Card> hand) {
-        int handVal = 0;
-        int numAces = 0;
-
-        for (Card card : hand) {
-            if (card.getValue() == 1) {
-                numAces += 1;
-            }
-            else if (card.getValue() < 10) {
-                handVal += card.getValue();
-            }
-            else{
-                handVal += 10;
-            }
-        }
-        for (int i = 0; i < numAces; i++) {
-            if(handVal < 11) {
-                handVal += 11;
-            }
-            else {
-                handVal += 1;
-            }
-        }
-
-        return handVal;
-    }
-
-    public void buildCard(int numCards, ArrayList<Card> hand) {
-        top(numCards);
-        center(numCards, hand);
-        bottom(numCards);
-        System.out.print("\n");
-    }
-
-    public void top(int numCards) {
-        for (int i = 0; i < numCards; i++) {
-            System.out.print(" _____  ");
-        }
-        System.out.print("\n");
-    }
-
-    public void center(int numCards, ArrayList<Card> hand) {
-        for (int i = 0; i < numCards; i++) {
-            if (!hand.get(i).getHidden()) {
-                System.out.print("|" + hand.get(i).getStringOfValue() + "    | ");
-            }
-            else {
-                System.out.print("|     | ");
-            }
-        }
-        System.out.print("\n");
-        for (int i = 0; i < numCards; i++) {
-            if (!hand.get(i).getHidden()) {
-                System.out.print("|  " + hand.get(i).getStringOfSuit() + "  | ");
-            }
-            else {
-                System.out.print("|     | ");
-            }
-        }
-        System.out.print("\n");
-        for (int i = 0; i < numCards; i++) {
-            if (!hand.get(i).getHidden()) {
-                System.out.print("|    " + hand.get(i).getStringOfValue() + "| ");
-            }
-            else {
-                System.out.print("|     | ");
-            }
-        }
-        System.out.print("\n");
-    }
-
-    public void bottom(int numCards) {
-        for (int i = 0; i < numCards; i++) {
-            System.out.print(" ‾‾‾‾‾  ");
-        }
-        System.out.print("\n");
+    public void resetHands() {
+        playerHand.clear();
+        dealerHand.clear();
+        pHandValue = 0;
+        dHandValue = 0;
+        pHandSize = 0;
+        dHandSize = 0;
     }
 }
