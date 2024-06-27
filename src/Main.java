@@ -7,7 +7,7 @@ public class Main {
 
         boolean playing = true;
         while (playing) {
-            System.out.print("Play?\n");
+            System.out.print("New Game?\n");
             String answer = scnr.next();
             if(answer.equals("y")) {
                 Play game = new Play();

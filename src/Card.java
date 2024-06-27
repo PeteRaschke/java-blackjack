@@ -1,6 +1,7 @@
 public class Card {
     private int valueOfCard = 0; //1-10 J-K = 11-13
     private int suitOfCard = 0;  //1-4 Spade,Heart,Club,Diamond
+    private boolean hidden = false;
 
     public Card(int newCardValue, int newCardSuit) {
         valueOfCard = newCardValue;
@@ -42,6 +43,15 @@ public class Card {
             case 4 -> "D";
             default -> null;
         };
+
+    }
+
+    public boolean getHidden() {
+        return this.hidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }
 
