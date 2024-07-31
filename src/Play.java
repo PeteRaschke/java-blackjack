@@ -56,6 +56,18 @@ public class Play {
             }
             else if (answer.equals("s")) {
                 dealersTurn();
+                Helper.buildCard(dHandSize, dealerHand);
+                Helper.buildCard(pHandSize, playerHand);
+                System.out.print("Current hand value: " + pHandValue + "\n");
+                compareHands();
+                System.out.print("Continue with this shoe? (y/n):\n");
+                String cont = scnr.next();
+                if (cont.equals("y")) {
+                    start();
+                }
+                else {
+                    Play();
+                }
             }
             else if (answer.equals("q")) {
                 playing = false;
@@ -76,6 +88,21 @@ public class Play {
                 dHandSize += 1;
                 dHandValue = Helper.handValue(dealerHand);
             }
+        }
+    }
+
+    public void compareHands() {
+        if (dHandValue < pHandValue) {
+            System.out.print("Player wins!\n");
+        }
+        else if (dHandValue == pHandValue) {
+            System.out.print("Draw!\n");
+        }
+        else if (dHandValue > 21) {
+            System.out.print("Dealer bust, player wins!\n");
+        }
+        else {
+            System.out.print("Dealer wins!\n");
         }
     }
 
