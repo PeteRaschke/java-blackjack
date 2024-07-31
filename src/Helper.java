@@ -16,6 +16,7 @@ public class Helper {
                 handVal += 10;
             }
         }
+
         for (int i = 0; i < numAces; i++) {
             if(handVal < 11) {
                 handVal += 11;
@@ -28,6 +29,7 @@ public class Helper {
         return handVal;
     }
 
+    //Prints out cards line by line
     public static void buildCard(int numCards, ArrayList<Card> hand) {
         top(numCards);
         center(numCards, hand);

@@ -16,6 +16,7 @@ public class Play {
         this.scnr = new Scanner(System.in);
     }
 
+    //This is the main game loop
     public void start() {
         boolean playing = true;
         resetHands();
@@ -29,6 +30,7 @@ public class Play {
         dealerHand.add(hiddenCard);
         dHandSize += 2;
 
+        //NOTE: this should be seperated, the function is doing too much
         while (playing) {
             Helper.buildCard(dHandSize, dealerHand);
             Helper.buildCard(pHandSize, playerHand);
@@ -61,6 +63,7 @@ public class Play {
         }
     }
 
+    //Reveals dealer's hidden card and plays out dealer turn
     public void dealersTurn() {
         boolean drawing = true;
         dealerHand.get(1).setHidden(false);

@@ -46,6 +46,7 @@ public class Card {
 
     }
 
+    //If a card should be hidden to the player
     public boolean getHidden() {
         return this.hidden;
     }

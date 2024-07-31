@@ -20,8 +20,8 @@ public class Deck {
         }
     }
 
+    //Shuffles deck using Fisher-Yates Shuffle
     public void shuffle() {
-        //Shuffles deck using Fisher-Yates Shuffle
         Random random = new Random();
         for (int i = size - 1; i > 0; i--) {
             int j = random.nextInt(i + 1);
