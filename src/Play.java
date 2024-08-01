@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class Play {
     private Deck deck;
     private Scanner scnr;
+    private int bet = 0;
+    private int balance = 0;
     private int pHandValue = 0;
     private int dHandValue = 0;
     private int pHandSize = 0;
@@ -11,9 +13,10 @@ public class Play {
     ArrayList<Card> playerHand = new ArrayList<Card>();
     ArrayList<Card> dealerHand = new ArrayList<Card>();
 
-    public Play() {
+    public Play(int initBalance) {
         this.deck = new Deck();
         this.scnr = new Scanner(System.in);
+        balance = initBalance;
     }
 
     //This is the main game loop
@@ -21,6 +24,10 @@ public class Play {
         boolean playing = true;
         resetHands();
 
+        System.out.print("Current balance: $" + balance + "\n");
+        System.out.print("Place Bet: $");
+        bet = Integer.parseInt(scnr.next());
+        balance -= bet;
         playerHand.add(deck.drawCard());
         playerHand.add(deck.drawCard());
         pHandSize += 2;
@@ -44,10 +51,12 @@ public class Play {
                     start();
                 }
                 else {
-                    break;
+                    Main.newShoe(balance);
                 }
             }
             System.out.print("Current hand value: " + pHandValue + "\n");
+            System.out.print("Current balance: $" + balance + "\n");
+            System.out.print("Cards left in shoe: " + deck.cardsLeft() + "\n"); //For Testing
             System.out.print("Hit(h), Stay(s)?");
             String answer = scnr.next();
             if (answer.equals("h")) {
@@ -66,7 +75,7 @@ public class Play {
                     start();
                 }
                 else {
-                    Play();
+                    Main.newShoe(balance);
                 }
             }
             else if (answer.equals("q")) {
@@ -94,12 +103,15 @@ public class Play {
     public void compareHands() {
         if (dHandValue < pHandValue) {
             System.out.print("Player wins!\n");
+            balance += bet * 2;
         }
         else if (dHandValue == pHandValue) {
             System.out.print("Draw!\n");
+            balance += bet;
         }
         else if (dHandValue > 21) {
             System.out.print("Dealer bust, player wins!\n");
+            balance += bet * 2;
         }
         else {
             System.out.print("Dealer wins!\n");
