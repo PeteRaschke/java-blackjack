@@ -18,8 +18,10 @@ public class Main {
             if(answer.equals("y")) {
                 Play game = new Play(balance);
                 game.start();
-            } else {
+            }
+            else {
                 playing = false;
+                System.exit(0);
             }
         }
     }

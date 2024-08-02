@@ -37,6 +37,12 @@ public class Deck {
         return cardDrawn;
     }
 
+    public void newDeck() {
+        size = 0;
+        fillDeck();
+        shuffle();
+    }
+
     public int cardsLeft() {
         return size;
     }

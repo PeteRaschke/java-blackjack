@@ -4,6 +4,7 @@ import java.util.ArrayList;
 public class Play {
     private Deck deck;
     private Scanner scnr;
+    private int handsPlayed = 0;
     private int bet = 0;
     private int balance = 0;
     private int pHandValue = 0;
@@ -23,8 +24,17 @@ public class Play {
     public void start() {
         boolean playing = true;
         resetHands();
+        handsPlayed += 1;
+        if(handsPlayed >= 5) {
+            System.out.print("Four hands played, reshuffling shoe...\n");
+            deck.newDeck();
+        }
 
         System.out.print("Current balance: $" + balance + "\n");
+        if (balance <= 0) {
+            System.out.print("You've got no money left, better luck next time!\n");
+            System.exit(0);
+        }
         System.out.print("Place Bet: $");
         bet = Integer.parseInt(scnr.next());
         balance -= bet;
@@ -43,43 +53,30 @@ public class Play {
             Helper.buildCard(pHandSize, playerHand);
             dHandValue = Helper.handValue(dealerHand);
             pHandValue = Helper.handValue(playerHand);
-            if (pHandValue > 21) {
-                System.out.print("Player bust!\n");
-                System.out.print("Continue with this shoe? (y/n):\n");
-                String answer = scnr.next();
-                if (answer.equals("y")) {
-                    start();
-                }
-                else {
-                    Main.newShoe(balance);
-                }
-            }
+            checkBust();
             System.out.print("Current hand value: " + pHandValue + "\n");
             System.out.print("Current balance: $" + balance + "\n");
-            System.out.print("Cards left in shoe: " + deck.cardsLeft() + "\n"); //For Testing
-            System.out.print("Hit(h), Stay(s)?");
+            System.out.print("Hit(h), Double(d), Stay(s), or quit game(q)?");
             String answer = scnr.next();
-            if (answer.equals("h")) {
-                playerHand.add(deck.drawCard());
-                pHandSize += 1;
-            }
-            else if (answer.equals("s")) {
-                dealersTurn();
-                Helper.buildCard(dHandSize, dealerHand);
-                Helper.buildCard(pHandSize, playerHand);
-                System.out.print("Current hand value: " + pHandValue + "\n");
-                compareHands();
-                System.out.print("Continue with this shoe? (y/n):\n");
-                String cont = scnr.next();
-                if (cont.equals("y")) {
-                    start();
+            switch (answer) {
+                case "h" -> {
+                    playerHand.add(deck.drawCard());
+                    pHandSize += 1;
                 }
-                else {
-                    Main.newShoe(balance);
+                case "d" -> {
+                    balance -= bet;
+                    bet += bet;
+                    playerHand.add(deck.drawCard());
+                    pHandSize += 1;
+                    pHandValue = Helper.handValue(playerHand);
+                    stay();
                 }
-            }
-            else if (answer.equals("q")) {
-                playing = false;
+                case "s" -> {
+                    stay();
+                }
+                case "q" -> {
+                    playing = false;
+                }
             }
         }
     }
@@ -96,6 +93,36 @@ public class Play {
                 dealerHand.add(deck.drawCard());
                 dHandSize += 1;
                 dHandValue = Helper.handValue(dealerHand);
+            }
+        }
+    }
+
+    public void stay() {
+        dealersTurn();
+        Helper.buildCard(dHandSize, dealerHand);
+        Helper.buildCard(pHandSize, playerHand);
+        checkBust();
+        System.out.print("Current hand value: " + pHandValue + "\n");
+        compareHands();
+        System.out.print("Continue with this shoe? (y/n):\n");
+        String cont = scnr.next();
+        if (cont.equals("y")) {
+            start();
+        } else {
+            Main.newShoe(balance);
+        }
+    }
+
+    public void checkBust() {
+        if (pHandValue > 21) {
+            System.out.print("Player bust!\n");
+            System.out.print("Continue with this shoe? (y/n):\n");
+            String answer = scnr.next();
+            if (answer.equals("y")) {
+                start();
+            }
+            else {
+                Main.newShoe(balance);
             }
         }
     }
