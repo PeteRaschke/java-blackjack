@@ -19,11 +19,11 @@ Then you will be asked if you want a new Shoe, saying no at this point will clos
 
 ![New Shoe](https://github.com/user-attachments/assets/ee93b864-5cbc-4bb6-90b0-2014d7e541b4)
 
-After answering yes you will be prompted to enter a bet before the cards are dealt, the bet any be any positive integer up to your balance (No minimum bet size):
+After answering yes you will be prompted to enter a bet before the cards are dealt, the bet can be any positive integer up to your balance (No minimum bet size):
 
 ![Place bet](https://github.com/user-attachments/assets/c0a33b09-60aa-4a5f-91c1-76b170d4bd7c)
 
-After choosing your bet, both you and the dealer will be dealt two cards with one of the dealer's cards being hidden from you. At this point, you can choose to hit, stay double down, or quit the game:
+After choosing your bet, both you and the dealer will be dealt two cards with one of the dealer's cards being hidden from you. At this point, you can choose to hit, stay, double down, or quit the game:
 
 ![Play](https://github.com/user-attachments/assets/31f0983d-fa31-4d08-b1c2-54067df5b20c)
 
