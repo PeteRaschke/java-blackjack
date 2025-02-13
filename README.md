@@ -1,7 +1,7 @@
-# Ascii Blackjack Using Java
+# Console Blackjack Using Java
 
 ## Project Description
-This project is a playable ASCII version of blackjack. You can choose your starting balance and play until it reaches zero, you can also choose whether or not to have a new shoe reshuffled after each hand. The rules are similar to most versions of blackjack but:
+This project is a playable console version of blackjack. You can choose your starting balance and play until it reaches zero, you can also choose whether or not to have a new shoe reshuffled after each hand. The rules are similar to most versions of blackjack but:
 - No splitting or insurance (May be implemented in the future)
 - All wins pay out two to one
 - Each shoe is one deck
